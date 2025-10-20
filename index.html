@@ -99,6 +99,9 @@
         <input type="radio" id="alumni" name="category" value="alumni">
         <label for="alumni">Alumni</label>
       </div>
+      <!-- Pemberitahuan pembayaran dinamis -->
+<div id="paymentNotice"></div>
+
 
       <label for="jerseySize">Ukuran Jersey:</label>
       <select id="jerseySize" name="jerseySize" required>
@@ -163,24 +166,30 @@
     const db = getFirestore(app);
 
     // 🔹 Ubah opsi pembayaran otomatis
-    document.querySelectorAll('input[name="category"]').forEach(radio => {
-      radio.addEventListener('change', function() {
-        const paymentOptions = document.getElementById('paymentOptions');
-        if (this.value === 'alumni') {
-          paymentOptions.innerHTML = `
-            <input type="radio" id="transfer" name="payment" value="transfer" required>
-            <label for="transfer">Transfer ke Rekening BSI 7551212127 a.n. SMPM 12 GKB Temporary</label>
-          `;
-        } else {
-          paymentOptions.innerHTML = `
-            <input type="radio" id="transfer" name="payment" value="transfer" required>
-            <label for="transfer">Transfer ke Rekening BSI 7551212127 a.n. SMPM 12 GKB Temporary</label><br>
-            <input type="radio" id="khafhaya" name="payment" value="khafhaya">
-            <label for="khafhaya">Dikasih ke Khafhaya 9 ICP 1</label>
-          `;
-        }
-      });
-    });
+   // 🔹 Dinamis opsi pembayaran & pemberitahuan
+document.querySelectorAll('input[name="category"]').forEach(radio => {
+  radio.addEventListener('change', function() {
+    const paymentNotice = document.getElementById('paymentNotice');
+    const paymentOptions = document.getElementById('paymentOptions');
+
+    if (this.value === 'alumni') {
+      paymentOptions.innerHTML = `
+        <input type="radio" id="transfer" name="payment" value="transfer" required>
+        <label for="transfer">Transfer ke Rekening BSI 7551212127 a.n. SMPM 12 GKB Temporary</label>
+      `;
+      paymentNotice.textContent = "⚠️ Alumni wajib membayar dengan Transfer.";
+    } else {
+      paymentOptions.innerHTML = `
+        <input type="radio" id="transfer" name="payment" value="transfer" required>
+        <label for="transfer">Transfer ke Rekening BSI 7551212127 a.n. SMPM 12 GKB Temporary</label><br>
+        <input type="radio" id="khafhaya" name="payment" value="khafhaya">
+        <label for="khafhaya">Dapat dititipkan ke Khafhaya 9 ICP</label>
+      `;
+      paymentNotice.textContent = "⚠️ Guru dan Siswa bisa membayar dengan Transfer atau dititipkan ke Khafhaya 9 ICP.";
+    }
+  });
+});
+
 
     // 🔹 Fungsi nomor urut global
     async function getNextNumber() {
@@ -219,6 +228,7 @@
   </script>
 </body>
 </html>
+
 
 
 
