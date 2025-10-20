@@ -12,7 +12,206 @@
       padding: 20px;
     }
     .container {
+      max-width: 600px;<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pendaftaran Dalas Run</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      background: #f9f9f9;
+      color: #333;
+    }
+    .container {
       max-width: 600px;
+      margin: auto;
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    .logo {
+      display: block;
+      margin: 0 auto 20px auto;
+      width: 150px;
+    }
+    .jersey-img {
+      display: block;
+      width: 100%;
+      margin: 20px 0;
+      border-radius: 10px;
+    }
+    label {
+      font-weight: bold;
+      display: block;
+      margin-top: 10px;
+    }
+    input, select {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+    button {
+      margin-top: 20px;
+      background: #1e90ff;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #0078e7;
+    }
+    .notice {
+      background: #e8f4ff;
+      border-left: 4px solid #1e90ff;
+      padding: 10px;
+      margin-top: 20px;
+      border-radius: 8px;
+    }
+    .hidden {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <img src="Logo baru.png" alt="Logo DalasRun Baru" class="logo" />
+
+    <h2>Pendaftaran Dalas Run</h2>
+
+    <form id="registrationForm">
+      <label for="name">Nama Lengkap</label>
+      <input type="text" id="name" required />
+
+      <label for="phone">Nomor HP</label>
+      <input type="tel" id="phone" required />
+
+      <label>Kategori Peserta</label>
+      <div>
+        <input type="radio" id="guru" name="category" value="guru" required>
+        <label for="guru">Guru</label><br>
+        <input type="radio" id="siswa" name="category" value="siswa">
+        <label for="siswa">Siswa</label><br>
+        <input type="radio" id="alumni" name="category" value="alumni">
+        <label for="alumni">Alumni</label>
+      </div>
+
+      <label>Jenis Kelamin</label>
+      <div>
+        <input type="radio" id="laki" name="gender" value="Laki-laki" required>
+        <label for="laki">Laki-laki</label><br>
+        <input type="radio" id="perempuan" name="gender" value="Perempuan">
+        <label for="perempuan">Perempuan</label>
+      </div>
+
+      <label for="jerseySize">Ukuran Jersey</label>
+      <select id="jerseySize" required>
+        <optgroup label="Anak-anak">
+          <option value="XS Anak">XS</option>
+          <option value="S Anak">S</option>
+          <option value="M Anak">M</option>
+          <option value="L Anak">L</option>
+          <option value="XL Anak">XL</option>
+          <option value="XXL Anak">XXL</option>
+          <option value="3XL Anak">3XL</option>
+        </optgroup>
+        <optgroup label="Dewasa">
+          <option value="S Dewasa">S</option>
+          <option value="M Dewasa">M</option>
+          <option value="L Dewasa">L</option>
+          <option value="XL Dewasa">XL</option>
+          <option value="2XL Dewasa">2XL</option>
+          <option value="3XL Dewasa">3XL</option>
+          <option value="4XL Dewasa">4XL</option>
+          <option value="5XL Dewasa">5XL</option>
+          <option value="6XL Dewasa">6XL</option>
+          <option value="7XL Dewasa">7XL</option>
+        </optgroup>
+      </select>
+
+      <label>Pembayaran</label>
+      <div id="paymentOptions">
+        <input type="radio" id="transfer" name="payment" value="transfer" required>
+        <label for="transfer">Transfer ke Rekening BSI 7551212127 a.n. SMPM 12 GKB Temporary</label>
+      </div>
+
+      <div class="notice">
+        💬 Setelah melakukan transfer, kirim <b>bukti pembayaran</b> ke salah satu nomor berikut:<br>
+        📱 <b>Yafa:</b> 0856-0703-4108<br>
+        📱 <b>Livia:</b> 0857-7617-6845
+      </div>
+
+      <button type="submit">Daftar Sekarang</button>
+    </form>
+
+    <img src="Chart Baju.jpg" alt="Chart Ukuran Jersey DalasRun" class="jersey-img" />
+
+    <div id="result" class="hidden">
+      <h3>Pendaftaran Berhasil!</h3>
+      <p>Nomor Peserta Anda: <b id="participantNumber"></b></p>
+    </div>
+  </div>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-app.js";
+    import { getFirestore, collection, addDoc, getDocs } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyBugeV9lOylEyrwY9gVZvv8HP1NPBb4WiI",
+      authDomain: "dalas-run.firebaseapp.com",
+      projectId: "dalas-run",
+      storageBucket: "dalas-run.firebasestorage.app",
+      messagingSenderId: "903129658881",
+      appId: "1:903129658881:web:98593518aa602aaa7bf200",
+      measurementId: "G-BRWP0LZFYG"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    async function getNextNumber() {
+      const snap = await getDocs(collection(db, 'pendaftar'));
+      return (snap.size + 1).toString().padStart(3, '0');
+    }
+
+    document.getElementById('registrationForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const name = document.getElementById('name').value;
+      const phone = document.getElementById('phone').value;
+      const category = document.querySelector('input[name="category"]:checked').value;
+      const gender = document.querySelector('input[name="gender"]:checked').value;
+      const jerseySize = document.getElementById('jerseySize').value;
+      const payment = document.querySelector('input[name="payment"]:checked').value;
+
+      const nomor = await getNextNumber();
+
+      await addDoc(collection(db, 'pendaftar'), {
+        nomorPeserta: nomor,
+        nama: name,
+        telepon: phone,
+        kategori: category,
+        jenisKelamin: gender,
+        ukuranJersey: jerseySize,
+        pembayaran: payment,
+        waktu: new Date().toISOString()
+      });
+
+      document.getElementById('participantNumber').textContent = nomor;
+      document.getElementById('result').classList.remove('hidden');
+      document.getElementById('registrationForm').reset();
+    });
+  </script>
+</body>
+</html>
+
       margin: 0 auto;
       background-color: white;
       padding: 20px;
@@ -253,6 +452,7 @@ document.querySelectorAll('input[name="category"]').forEach(radio => {
   </script>
 </body>
 </html>
+
 
 
 
