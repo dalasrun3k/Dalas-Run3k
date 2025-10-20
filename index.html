@@ -103,14 +103,37 @@
 <div id="paymentNotice"></div>
 
 
-      <label for="jerseySize">Ukuran Jersey:</label>
-      <select id="jerseySize" name="jerseySize" required>
-        <option value="">Pilih Ukuran</option>
-        <option value="S">S</option>
-        <option value="M">M</option>
-        <option value="L">L</option>
-        <option value="XL">XL</option>
-      </select>
+  <label for="jerseySize">Ukuran Jersey:</label>
+<select id="jerseySize" name="jerseySize" required>
+  <option value="">Pilih Ukuran</option>
+
+  <optgroup label="Ukuran Anak-anak">
+    <option value="XS Anak">XS Anak</option>
+    <option value="S Anak">S Anak</option>
+    <option value="M Anak">M Anak</option>
+    <option value="L Anak">L Anak</option>
+    <option value="XL Anak">XL Anak</option>
+    <option value="2XL Anak">2XL Anak</option>
+    <option value="3XL Anak">3XL Anak</option>
+  </optgroup>
+
+  <optgroup label="Ukuran Dewasa">
+    <option value="S Dewasa">S Dewasa</option>
+    <option value="M Dewasa">M Dewasa</option>
+    <option value="L Dewasa">L Dewasa</option>
+    <option value="XL Dewasa">XL Dewasa</option>
+    <option value="2XL Dewasa">2XL Dewasa</option>
+    <option value="3XL Dewasa">3XL Dewasa</option>
+    <option value="4XL Dewasa">4XL Dewasa</option>
+    <option value="5XL Dewasa">5XL Dewasa</option>
+    <option value="6XL Dewasa">6XL Dewasa</option>
+    <option value="7XL Dewasa">7XL Dewasa</option>
+  </optgroup>
+</select>
+
+<p style="font-size: 0.9em; color: #555;">
+  Pilih ukuran sesuai kategori Anak-anak atau Dewasa.
+</p>
 
       <!-- Gambar jersey -->
       <img src="JerseyDBR.png" alt="Desain Jersey DBR" width="300">
@@ -228,6 +251,7 @@ document.querySelectorAll('input[name="category"]').forEach(radio => {
   </script>
 </body>
 </html>
+
 
 
 
