@@ -240,7 +240,7 @@
 
       const nomor = await getNextNumber();
 
-      await addDoc(collection(db, 'Dalas Run'), {
+      await addDoc(collection(db, 'pendaftar'), {
         nomorPeserta: nomor,
         nama: name,
         telepon: phone,
@@ -258,6 +258,7 @@
   </script>
 </body>
 </html>
+
 
 
 
