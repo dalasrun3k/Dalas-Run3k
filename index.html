@@ -205,59 +205,61 @@
     </div>
   </div>
 
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-app.js";
-    import { getFirestore, collection, addDoc, getDocs } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-firestore.js";
+ <script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-app.js";
+  import { getFirestore, collection, addDoc, getDocs } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-firestore.js";
 
-    const firebaseConfig = {
-      apiKey: "AIzaSyBugeV9lOylEyrwY9gVZvv8HP1NPBb4WiI",
-      authDomain: "dalas-run.firebaseapp.com",
-      projectId: "dalas-run",
-      storageBucket: "dalas-run.firebasestorage.app",
-      messagingSenderId: "903129658881",
-      appId: "1:903129658881:web:98593518aa602aaa7bf200",
-      measurementId: "G-BRWP0LZFYG"
-    };
+  const firebaseConfig = {
+    apiKey: "AIzaSyBugeV9lOylEyrwY9gVZvv8HP1NPBb4WiI",
+    authDomain: "dalas-run.firebaseapp.com",
+    projectId: "dalas-run",
+    storageBucket: "dalas-run.firebasestorage.app",
+    messagingSenderId: "903129658881",
+    appId: "1:903129658881:web:98593518aa602aaa7bf200",
+    measurementId: "G-BRWP0LZFYG"
+  };
 
-    const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app);
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
 
-    async function getNextNumber() {
-      const snap = await getDocs(collection(db, 'Dalas Run'));
-      const count = snap.size;
-      return (count + 1).toString().padStart(3, '0');
-    }
+  async function getNextNumber() {
+    const snap = await getDocs(collection(db, "pendaftar"));
+    const count = snap.size;
+    return (count + 1).toString().padStart(3, "0");
+  }
 
-    document.getElementById('registrationForm').addEventListener('submit', async (event) => {
-      event.preventDefault();
+  document.getElementById("registrationForm").addEventListener("submit", async (event) => {
+    event.preventDefault();
 
-      const name = document.getElementById('name').value;
-      const phone = document.getElementById('phone').value;
-      const category = document.querySelector('input[name="category"]:checked').value;
-      const gender = document.querySelector('input[name="gender"]:checked').value;
-      const jerseySize = document.getElementById('jerseySize').value;
-      const payment = document.querySelector('input[name="payment"]:checked').value;
+    const name = document.getElementById("name").value;
+    const phone = document.getElementById("phone").value;
+    const category = document.querySelector('input[name="category"]:checked').value;
+    const gender = document.querySelector('input[name="gender"]:checked').value;
+    const jerseySize = document.getElementById("jerseySize").value;
+    const payment = document.querySelector('input[name="payment"]:checked').value;
 
-      const nomor = await getNextNumber();
+    const nomor = await getNextNumber();
 
-      await addDoc(collection(db, 'Dalas Run'),
-        nomorPeserta: nomor,
-        nama: name,
-        telepon: phone,
-        kategori: category,
-        jenisKelamin: gender,
-        ukuranJersey: jerseySize,
-        pembayaran: payment,
-        waktu: new Date().toISOString()
-      });
-
-      document.getElementById('participantNumber').textContent = nomor;
-      document.getElementById('result').classList.remove('hidden');
-      document.getElementById('registrationForm').reset();
+    await addDoc(collection(db, "pendaftar"), {
+      nomorPeserta: nomor,
+      nama: name,
+      telepon: phone,
+      kategori: category,
+      jenisKelamin: gender,
+      ukuranJersey: jerseySize,
+      pembayaran: payment,
+      waktu: new Date().toISOString()
     });
+
+    document.getElementById("participantNumber").textContent = nomor;
+    document.getElementById("result").classList.remove("hidden");
+    document.getElementById("registrationForm").reset();
+  });
+
   </script>
 </body>
 </html>
+
 
 
 
