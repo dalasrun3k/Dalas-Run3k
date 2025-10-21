@@ -223,7 +223,7 @@
     const db = getFirestore(app);
 
     async function getNextNumber() {
-      const snap = await getDocs(collection(db, 'pendaftar'));
+      const snap = await getDocs(collection(db, 'Dalas Run'));
       const count = snap.size;
       return (count + 1).toString().padStart(3, '0');
     }
@@ -240,7 +240,7 @@
 
       const nomor = await getNextNumber();
 
-      await addDoc(collection(db, 'pendaftar'), {
+      await addDoc(collection(db, 'Dalas Run'),
         nomorPeserta: nomor,
         nama: name,
         telepon: phone,
@@ -258,6 +258,7 @@
   </script>
 </body>
 </html>
+
 
 
 
