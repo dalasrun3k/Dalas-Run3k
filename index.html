@@ -72,21 +72,17 @@
       max-width: 250px;
       border-radius: 6px;
     }
-
-    /* 🔹 Rapiin radio dan checkbox */
     .radio-group, .payment-group {
       display: flex;
       flex-direction: column;
       gap: 8px;
       margin-bottom: 15px;
     }
-
     .radio-option, .payment-option {
       display: flex;
       align-items: center;
       gap: 10px;
     }
-
     .radio-option input[type="radio"],
     .payment-option input[type="radio"] {
       width: 18px;
@@ -95,7 +91,6 @@
       cursor: pointer;
       accent-color: #4CAF50;
     }
-
     .radio-option label,
     .payment-option label {
       font-weight: normal;
@@ -103,7 +98,6 @@
       color: #333;
       line-height: 1.4;
     }
-
     p.info {
       font-size: 14px;
       color: #444;
@@ -120,20 +114,23 @@
     </div>
 
     <h1>Pendaftaran Dalas Run</h1>
+
+    <!-- 🔹 Pesan pemberitahuan baru -->
     <div style="
-  background: #fff3cd;
-  border: 1px solid #ffeeba;
-  padding: 16px;
-  border-radius: 10px;
-  text-align: center;
-  color: #856404;
-  font-weight: bold;
-  font-size: 18px;
-  margin: 20px 0;
-">
-  ⚙️ Website pendaftaran <b>Dalas Run</b> sedang dalam perbaikan.<br>
-  Silakan kembali lagi nanti. Terima kasih atas pengertiannya 🙏
-</div>
+      background: #e7f3ff;
+      border: 1px solid #b3d7ff;
+      padding: 16px;
+      border-radius: 10px;
+      text-align: center;
+      color: #004085;
+      font-weight: bold;
+      font-size: 18px;
+      margin: 20px 0;
+    ">
+      ⚠️ <b>Perhatian!</b><br>
+      Setiap peserta hanya diperbolehkan <b>1 kali pendaftaran</b>.<br>
+      Mohon pastikan data yang kamu isi sudah benar sebelum menekan tombol <b>Daftar Sekarang</b>.
+    </div>
 
     <form id="registrationForm">
       <label for="name">Nama Lengkap</label>
@@ -194,94 +191,97 @@
         📱 Livia: 0857-7617-6845
       </p>
       <div class="checkbox-group">
-  <label>
-    <input type="checkbox" id="noHeartDisease" required>
-    Saya tidak memiliki riwayat penyakit jantung
-  </label>
-  <label>
-    <input type="checkbox" id="fitToRun" required>
-    Saya sanggup untuk mengikuti Dalas Blast Run 3K
-  </label>
-</div>
+        <label>
+          <input type="checkbox" id="noHeartDisease" required>
+          Saya tidak memiliki riwayat penyakit jantung
+        </label>
+        <label>
+          <input type="checkbox" id="fitToRun" required>
+          Saya sanggup untuk mengikuti Dalas Blast Run 3K
+        </label>
+      </div>
       
       <button type="submit">Daftar Sekarang</button>
     </form>
+
     <p style="text-align: center; margin-top: 15px;">
-  📱 <a href="https://chat.whatsapp.com/FmNtwkJqr2GBJVI3DdXqRP?mode=wwt" target="_blank" style="color: #007bff; text-decoration: none;">
-    Klik di sini untuk bergabung ke Grup WhatsApp Dalas Run
-  </a>
-</p>
+      📱 <a href="https://chat.whatsapp.com/FmNtwkJqr2GBJVI3DdXqRP?mode=wwt" target="_blank" style="color: #007bff; text-decoration: none;">
+        Klik di sini untuk bergabung ke Grup WhatsApp Dalas Run
+      </a>
+    </p>
 
     <img src="Chart Baju.jpg" alt="Chart Ukuran Jersey DalasRun" class="jersey-image">
 
-    <div id="result" class="result hidden">
-      <h3>Pendaftaran Berhasil!</h3>
-      <p>Nomor Peserta: <span id="participantNumber"></span></p>
+    <!-- 🔹 Pesan sukses baru -->
+    <div id="result" class="result hidden" style="
+      background-color: #d4edda;
+      color: #155724;
+      border: 1px solid #c3e6cb;
+      font-weight: bold;
+      font-size: 18px;
+      text-align: center;
+      padding: 16px;
+      border-radius: 10px;
+      margin-top: 20px;
+    ">
+      ✅ Pendaftaran Berhasil!
+      <br>Nomor Peserta Kamu: <span id="participantNumber"></span>
+      <br><br>
+      Mohon <b>tidak mengisi formulir lagi</b> agar datamu tidak terduplikasi 🙏
     </div>
   </div>
 
- <script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-app.js";
-  import { getFirestore, collection, addDoc, getDocs } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-firestore.js";
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-app.js";
+    import { getFirestore, collection, addDoc, getDocs } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-firestore.js";
 
-  const firebaseConfig = {
-    apiKey: "AIzaSyBugeV9lOylEyrwY9gVZvv8HP1NPBb4WiI",
-    authDomain: "dalas-run.firebaseapp.com",
-    projectId: "dalas-run",
-    storageBucket: "dalas-run.firebasestorage.app",
-    messagingSenderId: "903129658881",
-    appId: "1:903129658881:web:98593518aa602aaa7bf200",
-    measurementId: "G-BRWP0LZFYG"
-  };
+    const firebaseConfig = {
+      apiKey: "AIzaSyBugeV9lOylEyrwY9gVZvv8HP1NPBb4WiI",
+      authDomain: "dalas-run.firebaseapp.com",
+      projectId: "dalas-run",
+      storageBucket: "dalas-run.firebasestorage.app",
+      messagingSenderId: "903129658881",
+      appId: "1:903129658881:web:98593518aa602aaa7bf200",
+      measurementId: "G-BRWP0LZFYG"
+    };
 
-  const app = initializeApp(firebaseConfig);
-  const db = getFirestore(app);
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
 
-  async function getNextNumber() {
-    const snap = await getDocs(collection(db, "pendaftar"));
-    const count = snap.size;
-    return (count + 1).toString().padStart(3, "0");
-  }
+    async function getNextNumber() {
+      const snap = await getDocs(collection(db, "pendaftar"));
+      const count = snap.size;
+      return (count + 1).toString().padStart(3, "0");
+    }
 
-  document.getElementById("registrationForm").addEventListener("submit", async (event) => {
-    event.preventDefault();
+    document.getElementById("registrationForm").addEventListener("submit", async (event) => {
+      event.preventDefault();
 
-    const name = document.getElementById("name").value;
-    const phone = document.getElementById("phone").value;
-    const category = document.querySelector('input[name="category"]:checked').value;
-    const gender = document.querySelector('input[name="gender"]:checked').value;
-    const jerseySize = document.getElementById("jerseySize").value;
-    const payment = document.querySelector('input[name="payment"]:checked').value;
+      const name = document.getElementById("name").value;
+      const phone = document.getElementById("phone").value;
+      const category = document.querySelector('input[name="category"]:checked').value;
+      const gender = document.querySelector('input[name="gender"]:checked').value;
+      const jerseySize = document.getElementById("jerseySize").value;
+      const payment = document.querySelector('input[name="payment"]:checked').value;
 
-    const nomor = await getNextNumber();
+      const nomor = await getNextNumber();
 
-    await addDoc(collection(db, "pendaftar"), {
-      nomorPeserta: nomor,
-      nama: name,
-      telepon: phone,
-      kategori: category,
-      jenisKelamin: gender,
-      ukuranJersey: jerseySize,
-      pembayaran: payment,
-      waktu: new Date().toISOString()
+      await addDoc(collection(db, "pendaftar"), {
+        nomorPeserta: nomor,
+        nama: name,
+        telepon: phone,
+        kategori: category,
+        jenisKelamin: gender,
+        ukuranJersey: jerseySize,
+        pembayaran: payment,
+        waktu: new Date().toISOString()
+      });
+
+      // 🔹 tampilkan hasil dan sembunyikan form
+      document.getElementById("participantNumber").textContent = nomor;
+      document.getElementById("result").classList.remove("hidden");
+      document.getElementById("registrationForm").style.display = "none";
     });
-
-    document.getElementById("participantNumber").textContent = nomor;
-    document.getElementById("result").classList.remove("hidden");
-    document.getElementById("registrationForm").reset();
-  });
-
   </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
