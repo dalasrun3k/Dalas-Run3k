@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ekspor Data Pendaftar - Dalas Run</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: #f8fafc;
+      color: #333;
+      text-align: center;
+      padding: 40px;
+    }
+    table {
+      width: 90%;
+      margin: 20px auto;
+      border-collapse: collapse;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    th, td {
+      border: 1px solid #ccc;
+      padding: 10px 12px;
+    }
+    th {
+      background-color: #007bff;
+      color: white;
+      font-weight: 600;
+    }
+    tr:nth-child(even) {
+      background: #f2f6fc;
+    }
+    button {
+      background: #007bff;
+      color: white;
+      border: none;
+      padding: 12px 25px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: 0.3s;
+      margin-top: 20px;
+    }
+    button:hover {
+      background: #0056b3;
+    }
+  </style>
+</head>
+<body>
+  <h1>📄 Ekspor Data Pendaftar Dalas Run</h1>
+  <p>Berikut daftar pendaftar dari Firestore:</p>
+
+  <table>
+    <thead>
+      <tr>
+        <th>No Peserta</th>
+        <th>Nama</th>
+        <th>Kategori</th>
+        <th>Jenis Kelamin</th>
+        <th>Ukuran Jersey</th>
+      </tr>
+    </thead>
+    <tbody id="data-table">
+      <tr><td colspan="5">Memuat data...</td></tr>
+    </tbody>
+  </table>
+
+  <button id="exportBtn">Ekspor ke Excel</button>
+
+  <script type="module">
+    // Import modul dari Firebase CDN (VERSI MODULAR)
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
+    import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
+
+    // Konfigurasi Firebase kamu
+    const firebaseConfig = {
+      apiKey: "AIzaSyBugeV9lOylEyrwY9gVZvv8HP1NPBb4WiI",
+      authDomain: "dalas-run.firebaseapp.com",
+      projectId: "dalas-run",
+      storageBucket: "dalas-run.firebasestorage.app",
+      messagingSenderId: "903129658881",
+      appId: "1:903129658881:web:98593518aa602aaa7bf200",
+      measurementId: "G-BRWP0LZFYG"
+    };
+
+    // Inisialisasi Firebase & Firestore
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    // Fungsi untuk memuat data ke tabel
+    async function loadData() {
+      const tableBody = document.getElementById("data-table");
+      tableBody.innerHTML = "";
+
+      const querySnapshot = await getDocs(collection(db, "pendaftar"));
+      let data = [];
+
+      querySnapshot.forEach(doc => {
+        const d = doc.data();
+        data.push({
+          "Nomor Peserta": d.nomorPeserta || "",
+          "Nama": d.nama || "",
+          "Kategori": d.kategori || "",
+          "Jenis Kelamin": d.jenisKelamin || "",
+          "Ukuran Jersey": d.ukuranJersey || ""
+        });
+      });
+
+      // Urutkan berdasarkan nomor peserta
+      data.sort((a, b) => parseInt(a["Nomor Peserta"]) - parseInt(b["Nomor Peserta"]));
+
+      // Tampilkan ke tabel
+      if (data.length === 0) {
+        tableBody.innerHTML = `<tr><td colspan="5">Tidak ada data ditemukan</td></tr>`;
+      } else {
+        data.forEach(item => {
+          const row = `
+            <tr>
+              <td>${item["Nomor Peserta"]}</td>
+              <td>${item["Nama"]}</td>
+              <td>${item["Kategori"]}</td>
+              <td>${item["Jenis Kelamin"]}</td>
+              <td>${item["Ukuran Jersey"]}</td>
+            </tr>`;
+          tableBody.innerHTML += row;
+        });
+      }
+
+      return data;
+    }
+
+    // Muat data saat halaman dibuka
+    const allData = await loadData();
+
+    // Tombol ekspor ke Excel
+    document.getElementById("exportBtn").addEventListener("click", async () => {
+      const data = await loadData(); // ambil data terbaru
+      if (data.length === 0) {
+        alert("Tidak ada data untuk diekspor.");
+        return;
+      }
+
+      const ws = XLSX.utils.json_to_sheet(data);
+      const wb = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(wb, ws, "Data Pendaftar");
+
+      // Lebar kolom otomatis
+      const columnWidths = Object.keys(data[0]).map(key => ({ wch: key.length + 10 }));
+      ws["!cols"] = columnWidths;
+
+      XLSX.writeFile(wb, "Data_Pendaftar_DalasRun.xlsx");
+    });
+  </script>
+</body>
+</html>
