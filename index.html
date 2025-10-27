@@ -3,57 +3,72 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Export Data Pendaftar - Dalas Run</title>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+  <title>Pendaftaran Ditutup | Dalas Run</title>
   <style>
     body {
       font-family: 'Poppins', sans-serif;
-      background: #f8fafc;
-      color: #333;
+      background: linear-gradient(135deg, #ff4d4d, #ff9966);
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      color: #fff;
       text-align: center;
-      margin-top: 100px;
+      overflow: hidden;
     }
-    button {
-      background: #007bff;
-      color: white;
-      border: none;
-      padding: 12px 25px;
-      border-radius: 8px;
-      cursor: pointer;
-      font-size: 1rem;
-      transition: 0.3s;
+
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+      animation: fadeInDown 1s ease;
     }
-    button:hover {
-      background: #0056b3;
+
+    p {
+      font-size: 1.2rem;
+      opacity: 0.9;
+      animation: fadeIn 2s ease;
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(10px);
+      border-radius: 20px;
+      padding: 40px 60px;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+      animation: popUp 0.8s ease;
+    }
+
+    footer {
+      position: absolute;
+      bottom: 15px;
+      font-size: 0.9rem;
+      opacity: 0.8;
+    }
+
+    @keyframes fadeInDown {
+      from { opacity: 0; transform: translateY(-30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes popUp {
+      from { opacity: 0; transform: scale(0.9); }
+      to { opacity: 1; transform: scale(1); }
     }
   </style>
 </head>
 <body>
-  <h1>📄 Ekspor Data Pendaftar Dalas Run</h1>
-  <button id="exportBtn">Ekspor ke Excel</button>
-
-  <script type="module">
-    // --- Import library Firebase versi modular ---
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-    import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
-
-    // --- Konfigurasi Firebase ---
-    const firebaseConfig = {
-      apiKey: "AIzaSyBugeV9lOylEyrwY9gVZvv8HP1NPBb4WiI",
-      authDomain: "dalas-run.firebaseapp.com",
-      projectId: "dalas-run",
-      storageBucket: "dalas-run.firebasestorage.app",
-      messagingSenderId: "903129658881",
-      appId: "1:903129658881:web:98593518aa602aaa7bf200",
-      measurementId: "G-BRWP0LZFYG"
-    };
-
-    // Inisialisasi Firebase & Firestore
-    const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app);
-
-    // Fungsi tombol ekspor
-    document.getElementById("exportBtn").addEventListener("click", async () => {
-      try {
-        const querySnapshot = await getDocs(collection(db, "pendaftar"));
-        let data
+  <div class="card">
+    <h1>Pendaftaran Dalas Run Telah Ditutup</h1>
+    <p>Terima kasih kepada seluruh peserta yang telah mendaftar!<br>
+    Nantikan informasi dan event menarik berikutnya 💪🏃‍♂️</p>
+  </div>
+  <footer>© 2025 Dalas Run Committee</footer>
+</body>
+</html>
