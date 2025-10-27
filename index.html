@@ -101,36 +101,56 @@
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
     import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-    // 🔥 ISI DENGAN KONFIGURASI FIREBASE KAMU
-  const firebaseConfig = {
-    apiKey: "AIzaSyBugeV9lOylEyrwY9gVZvv8HP1NPBb4WiI",
-    authDomain: "dalas-run.firebaseapp.com",
-    projectId: "dalas-run",
-    storageBucket: "dalas-run.firebasestorage.app",
-    messagingSenderId: "903129658881",
-    appId: "1:903129658881:web:98593518aa602aaa7bf200",
-    measurementId: "G-BRWP0LZFYG"
-  };
+    // 🔥 Masukkan konfigurasi Firebase kamu di sini (JANGAN DIBAGIKAN KE ORANG LAIN)
+    const firebaseConfig = {
+      apiKey: "API_KEY_MU",
+      authDomain: "AUTH_DOMAIN_MU",
+      projectId: "PROJECT_ID_MU",
+      storageBucket: "STORAGE_BUCKET_MU",
+      messagingSenderId: "SENDER_ID_MU",
+      appId: "APP_ID_MU"
+    };
+
     // Inisialisasi Firebase
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
 
     // Fungsi ekspor
     async function exportToExcel() {
-      const querySnapshot = await getDocs(collection(db, "peserta")); // Ganti "peserta" sesuai nama koleksi kamu
+      const querySnapshot = await getDocs(collection(db, "pendaftar"));
       const data = [];
-      querySnapshot.forEach((doc) => data.push(doc.data()));
+
+      querySnapshot.forEach((doc) => {
+        const d = doc.data();
+        data.push({
+          Nomor_Peserta: d.nomorPeserta || "",
+          Nama: d.nama || "",
+          Kategori: d.kategori || "",
+          Jenis_Kelamin: d.jenisKelamin || "",
+          Ukuran_Jersey: d.ukuranJersey || "",
+          Pembayaran: d.pembayaran || "",
+          Telepon: d.telepon || "",
+          Waktu: d.waktu || ""
+        });
+      });
 
       if (data.length === 0) {
-        alert("Tidak ada data peserta ditemukan!");
+        alert("Tidak ada data pendaftar ditemukan!");
         return;
       }
 
-      // Buat file Excel
+      // 🔢 Urutkan berdasarkan nomor peserta
+      data.sort((a, b) => {
+        const numA = parseInt(a.Nomor_Peserta.replace(/\D/g, "")) || 0;
+        const numB = parseInt(b.Nomor_Peserta.replace(/\D/g, "")) || 0;
+        return numA - numB;
+      });
+
+      // Buat dan unduh file Excel
       const ws = XLSX.utils.json_to_sheet(data);
       const wb = XLSX.utils.book_new();
-      XLSX.utils.book_append_sheet(wb, ws, "Data Peserta");
-      XLSX.writeFile(wb, "Data_Peserta_Dalas_Run.xlsx");
+      XLSX.utils.book_append_sheet(wb, ws, "Data Pendaftar");
+      XLSX.writeFile(wb, "Data_Pendaftar_Dalas_Run.xlsx");
     }
 
     // Event klik tombol
