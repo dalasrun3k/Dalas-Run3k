@@ -47,6 +47,23 @@
       opacity: 0.8;
     }
 
+    /* Tombol ekspor */
+    #exportBtn {
+      margin-top: 25px;
+      padding: 10px 20px;
+      background: #4caf50;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background 0.3s ease;
+    }
+
+    #exportBtn:hover {
+      background: #45a049;
+    }
+
     @keyframes fadeInDown {
       from { opacity: 0; transform: translateY(-30px); }
       to { opacity: 1; transform: translateY(0); }
@@ -62,13 +79,62 @@
       to { opacity: 1; transform: scale(1); }
     }
   </style>
+
+  <!-- Library untuk Excel -->
+  <script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
 </head>
 <body>
   <div class="card">
     <h1>Pendaftaran Dalas Run Telah Ditutup</h1>
     <p>Terima kasih kepada seluruh peserta yang telah mendaftar!<br>
     Nantikan informasi dan event menarik berikutnya 💪🏃‍♂️</p>
+
+    <!-- Tombol ekspor -->
+    <button id="exportBtn">Ekspor Data ke Excel</button>
   </div>
+
   <footer>© 2025 Dalas Run Committee</footer>
+
+  <!-- Script Firebase + Ekspor Excel -->
+  <script type="module">
+    // Import Firebase SDK
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+    import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+    // 🔥 ISI DENGAN KONFIGURASI FIREBASE KAMU
+  const firebaseConfig = {
+    apiKey: "AIzaSyBugeV9lOylEyrwY9gVZvv8HP1NPBb4WiI",
+    authDomain: "dalas-run.firebaseapp.com",
+    projectId: "dalas-run",
+    storageBucket: "dalas-run.firebasestorage.app",
+    messagingSenderId: "903129658881",
+    appId: "1:903129658881:web:98593518aa602aaa7bf200",
+    measurementId: "G-BRWP0LZFYG"
+  };
+    // Inisialisasi Firebase
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    // Fungsi ekspor
+    async function exportToExcel() {
+      const querySnapshot = await getDocs(collection(db, "peserta")); // Ganti "peserta" sesuai nama koleksi kamu
+      const data = [];
+      querySnapshot.forEach((doc) => data.push(doc.data()));
+
+      if (data.length === 0) {
+        alert("Tidak ada data peserta ditemukan!");
+        return;
+      }
+
+      // Buat file Excel
+      const ws = XLSX.utils.json_to_sheet(data);
+      const wb = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(wb, ws, "Data Peserta");
+      XLSX.writeFile(wb, "Data_Peserta_Dalas_Run.xlsx");
+    }
+
+    // Event klik tombol
+    document.getElementById("exportBtn").addEventListener("click", exportToExcel);
+  </script>
 </body>
 </html>
