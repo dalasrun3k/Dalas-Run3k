@@ -52,6 +52,199 @@
       padding: 10px;
       border-radius: 8px;
       border: 1px solid #d6dbe6;
-      font-size
+      font-size: 14px;
+    }
 
-      
+    .radio-row {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+
+    button {
+      background: #2563eb;
+      color: white;
+      padding: 10px 16px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    button:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    .msg {
+      margin-top: 14px;
+      padding: 10px;
+      border-radius: 8px;
+      display: none;
+    }
+
+    .msg.success {
+      background: #e6ffef;
+      color: #065f46;
+      border: 1px solid #bbf7d0;
+      display: block;
+    }
+
+    .msg.error {
+      background: #fff1f2;
+      color: #9f1239;
+      border: 1px solid #fecaca;
+      display: block;
+    }
+
+    small {
+      color: #666;
+    }
+
+    @media (max-width: 600px) {
+      .row {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <h1>Pendaftaran Dalas Run</h1>
+    <p class="note">Hanya 1 Kali pendaftaran — pastikan data benar sebelum dikirim.</p>
+
+    <form id="regForm">
+      <div class="row">
+        <div style="flex:2">
+          <label for="nama">Nama Lengkap *</label>
+          <input id="nama" name="nama" type="text" required />
+        </div>
+        <div style="flex:1">
+          <label for="noPeserta">No. Peserta *</label>
+          <input id="noPeserta" name="noPeserta" type="text" required />
+        </div>
+      </div>
+
+      <div class="row">
+        <div style="flex:1">
+          <label for="kategori">Kategori *</label>
+          <select id="kategori" name="kategori" required>
+            <option value="">Pilih kategori</option>
+            <option>5K</option>
+            <option>10K</option>
+            <option>Half Marathon</option>
+          </select>
+        </div>
+
+        <div style="flex:1">
+          <label for="ukuran">Ukuran Baju *</label>
+          <select id="ukuran" name="ukuran" required>
+            <option value="">Pilih ukuran</option>
+            <option>S</option>
+            <option>M</option>
+            <option>L</option>
+            <option>XL</option>
+            <option>XXL</option>
+          </select>
+        </div>
+      </div>
+
+      <div style="margin-bottom:12px;">
+        <label>Jenis Kelamin *</label>
+        <div class="radio-row">
+          <label><input type="radio" name="jk" value="Laki-laki" required /> Laki-laki</label>
+          <label><input type="radio" name="jk" value="Perempuan" required /> Perempuan</label>
+        </div>
+      </div>
+
+      <div style="margin-bottom:12px;">
+        <label for="kontak">Nomor Kontak / WhatsApp *</label>
+        <input id="kontak" name="kontak" type="tel" required placeholder="08xxxxxxxxxx" />
+        <small>Gunakan nomor yang valid — berguna untuk konfirmasi.</small>
+      </div>
+
+      <button id="submitBtn" type="submit">Kirim Pendaftaran</button>
+    </form>
+
+    <div id="successMsg" class="msg success"></div>
+    <div id="errorMsg" class="msg error"></div>
+
+    <hr style="margin-top:20px" />
+    <small>
+      Catatan: data akan disimpan di Firestore collection <code>pendaftaran</code>.
+      Jika ingin menutup pendaftaran nanti, bisa aku tambahkan tombol “Tutup Pendaftaran”.
+    </small>
+  </div>
+
+  <!-- Firebase v8 CDN -->
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+
+  <script>
+    // 🔧 GANTI DENGAN KONFIGURASI FIREBASE MILIKMU
+const firebaseConfig = {
+    apiKey: "AIzaSyBugeV9lOylEyrwY9gVZvv8HP1NPBb4WiI",
+    authDomain: "dalas-run.firebaseapp.com",
+    projectId: "dalas-run",
+    storageBucket: "dalas-run.firebasestorage.app",
+    messagingSenderId: "903129658881",
+    appId: "1:903129658881:web:98593518aa602aaa7bf200",
+    measurementId: "G-BRWP0LZFYG"
+  };
+    firebase.initializeApp(firebaseConfig);
+    var db = firebase.firestore();
+
+    const form = document.getElementById('regForm');
+    const submitBtn = document.getElementById('submitBtn');
+    const successMsg = document.getElementById('successMsg');
+    const errorMsg = document.getElementById('errorMsg');
+
+    function showSuccess(text) {
+      successMsg.textContent = text;
+      successMsg.style.display = 'block';
+      errorMsg.style.display = 'none';
+    }
+
+    function showError(text) {
+      errorMsg.textContent = text;
+      errorMsg.style.display = 'block';
+      successMsg.style.display = 'none';
+    }
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      submitBtn.disabled = true;
+
+      const data = {
+        nama: document.getElementById('nama').value.trim(),
+        noPeserta: document.getElementById('noPeserta').value.trim(),
+        kategori: document.getElementById('kategori').value,
+        ukuran: document.getElementById('ukuran').value,
+        jenisKelamin: document.querySelector('input[name="jk"]:checked')?.value || '',
+        kontak: document.getElementById('kontak').value.trim(),
+        createdAt: new Date().toISOString()
+      };
+
+      if (!data.nama || !data.noPeserta || !data.kategori || !data.ukuran || !data.jenisKelamin || !data.kontak) {
+        showError('Harap isi semua field yang bertanda *.');
+        submitBtn.disabled = false;
+        return;
+      }
+
+      db.collection('pendaftaran').add(data)
+        .then((docRef) => {
+          showSuccess('Pendaftaran berhasil! (ID: ' + docRef.id + ')');
+          form.reset();
+          submitBtn.textContent = 'Terkirim';
+          submitBtn.disabled = true;
+        })
+        .catch((error) => {
+          console.error('Error: ', error);
+          showError('Terjadi kesalahan, coba lagi.');
+          submitBtn.disabled = false;
+        });
+    });
+  </script>
+</body>
+</html>
