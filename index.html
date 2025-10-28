@@ -1,250 +1,288 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Pendaftaran Dalas Run</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pendaftaran Dalas Run </title>
   <style>
     body {
-      font-family: Arial, Helvetica, sans-serif;
-      background: #f4f6fb;
+      font-family: Arial, sans-serif;
+      background-color: #f5f7fa;
       margin: 0;
-      padding: 20px;
+      padding: 0;
     }
-
     .container {
-      max-width: 720px;
-      margin: 20px auto;
-      background: white;
-      border-radius: 10px;
-      box-shadow: 0 6px 18px rgba(20, 20, 40, 0.08);
-      padding: 24px;
+      max-width: 500px;
+      margin: 30px auto;
+      background-color: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
     }
-
     h1 {
-      margin: 0 0 8px 0;
-      font-size: 22px;
-    }
-
-    p.note {
-      color: #b33939;
-      margin: 6px 0 18px 0;
-      font-weight: 600;
-    }
-
-    form .row {
-      display: flex;
-      gap: 12px;
-      margin-bottom: 12px;
-    }
-
-    label {
-      display: block;
-      font-size: 13px;
-      margin-bottom: 6px;
+      text-align: center;
       color: #333;
     }
-
-    input[type="text"],
-    input[type="tel"],
-    select {
+    .logo {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .logo img {
+      max-width: 150px;
+      width: auto;
+      height: auto;
+      display: block;
+      margin: 0 auto;
+    }
+    label {
+      font-weight: bold;
+      margin-top: 10px;
+      display: block;
+    }
+    input, select {
       width: 100%;
       padding: 10px;
-      border-radius: 8px;
-      border: 1px solid #d6dbe6;
-      font-size: 14px;
+      margin-top: 5px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
     }
-
-    .radio-row {
-      display: flex;
-      gap: 12px;
-      align-items: center;
-    }
-
     button {
-      background: #2563eb;
-      color: white;
-      padding: 10px 16px;
-      border: none;
-      border-radius: 10px;
-      cursor: pointer;
-      font-weight: 600;
-    }
-
-    button:disabled {
-      opacity: 0.6;
-      cursor: not-allowed;
-    }
-
-    .msg {
-      margin-top: 14px;
+      width: 100%;
       padding: 10px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+    .result {
+      margin-top: 20px;
+      padding: 15px;
+      background-color: #e7f3e7;
       border-radius: 8px;
-      display: none;
+      text-align: center;
     }
-
-    .msg.success {
-      background: #e6ffef;
-      color: #065f46;
-      border: 1px solid #bbf7d0;
+    .jersey-image {
       display: block;
+      margin: 10px auto;
+      max-width: 250px;
+      border-radius: 6px;
     }
-
-    .msg.error {
-      background: #fff1f2;
-      color: #9f1239;
-      border: 1px solid #fecaca;
-      display: block;
+    .radio-group, .payment-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-bottom: 15px;
     }
-
-    small {
-      color: #666;
+    .radio-option, .payment-option {
+      display: flex;
+      align-items: center;
+      gap: 10px;
     }
-
-    @media (max-width: 600px) {
-      .row {
-        flex-direction: column;
-      }
+    .radio-option input[type="radio"],
+    .payment-option input[type="radio"] {
+      width: 18px;
+      height: 18px;
+      margin: 0;
+      cursor: pointer;
+      accent-color: #4CAF50;
+    }
+    .radio-option label,
+    .payment-option label {
+      font-weight: normal;
+      cursor: pointer;
+      color: #333;
+      line-height: 1.4;
+    }
+    p.info {
+      font-size: 14px;
+      color: #444;
+      background-color: #f9fafc;
+      padding: 10px;
+      border-radius: 6px;
     }
   </style>
 </head>
-
 <body>
   <div class="container">
+    <div class="logo">
+      <img src="Logo baru.png" alt="Logo DalasRun Baru">
+    </div>
+
     <h1>Pendaftaran Dalas Run</h1>
-    <p class="note">Hanya 1 Kali pendaftaran — pastikan data benar sebelum dikirim.</p>
 
-    <form id="regForm">
-      <div class="row">
-        <div style="flex:2">
-          <label for="nama">Nama Lengkap *</label>
-          <input id="nama" name="nama" type="text" required />
-        </div>
-        <div style="flex:1">
-          <label for="noPeserta">No. Peserta *</label>
-          <input id="noPeserta" name="noPeserta" type="text" required />
+    <!-- 🔹 Pesan pemberitahuan baru -->
+    <div style="
+      background: #e7f3ff;
+      border: 1px solid #b3d7ff;
+      padding: 16px;
+      border-radius: 10px;
+      text-align: center;
+      color: #004085;
+      font-weight: bold;
+      font-size: 18px;
+      margin: 20px 0;
+    ">
+      ⚠️ <b>Perhatian!</b><br>
+      Setiap peserta hanya diperbolehkan <b>1 kali pendaftaran</b>.<br>
+      Mohon pastikan data yang kamu isi sudah benar sebelum menekan tombol <b>Daftar Sekarang</b>.
+    </div>
+
+    <form id="registrationForm">
+      <label for="name">Nama Lengkap</label>
+      <input type="text" id="name" required>
+
+      <label for="phone">Nomor HP</label>
+      <input type="tel" id="phone" required>
+
+      <label>Kategori Peserta</label>
+      <div class="radio-group">
+        <div class="radio-option"><input type="radio" name="category" value="guru" required><label>Guru</label></div>
+        <div class="radio-option"><input type="radio" name="category" value="siswa"><label>Siswa</label></div>
+        <div class="radio-option"><input type="radio" name="category" value="alumni"><label>Alumni</label></div>
+      </div>
+
+      <label>Jenis Kelamin</label>
+      <div class="radio-group">
+        <div class="radio-option"><input type="radio" name="gender" value="Laki-laki" required><label>Laki-laki</label></div>
+        <div class="radio-option"><input type="radio" name="gender" value="Perempuan"><label>Perempuan</label></div>
+      </div>
+
+      <label>Ukuran Jersey</label>
+      <select id="jerseySize" required>
+        <optgroup label="Anak-anak">
+          <option value="XS Anak">XS</option>
+          <option value="S Anak">S</option>
+          <option value="M Anak">M</option>
+          <option value="L Anak">L</option>
+          <option value="XL Anak">XL</option>
+          <option value="XXL Anak">XXL</option>
+          <option value="3XL Anak">3XL</option>
+        </optgroup>
+        <optgroup label="Dewasa">
+          <option value="S Dewasa">S</option>
+          <option value="M Dewasa">M</option>
+          <option value="L Dewasa">L</option>
+          <option value="XL Dewasa">XL</option>
+          <option value="XXL Dewasa">XXL</option>
+          <option value="3XL Dewasa">3XL</option>
+          <option value="4XL Dewasa">4XL</option>
+          <option value="5XL Dewasa">5XL</option>
+          <option value="6XL Dewasa">6XL</option>
+          <option value="7XL Dewasa">7XL</option>
+        </optgroup>
+      </select>
+
+      <label>Pembayaran</label>
+      <div class="payment-group">
+        <div class="payment-option">
+          <input type="radio" id="transfer" name="payment" value="transfer" required>
+          <label for="transfer">Transfer ke Rekening BSI 7551212127 a.n. SMPM 12 GKB Temporary</label>
         </div>
       </div>
 
-      <div class="row">
-        <div style="flex:1">
-          <label for="kategori">Kategori *</label>
-          <select id="kategori" name="kategori" required>
-            <option value="">Pilih kategori</option>
-            <option>5K</option>
-            <option>10K</option>
-            <option>Half Marathon</option>
-          </select>
-        </div>
-
-        <div style="flex:1">
-          <label for="ukuran">Ukuran Baju *</label>
-          <select id="ukuran" name="ukuran" required>
-            <option value="">Pilih ukuran</option>
-            <option>S</option>
-            <option>M</option>
-            <option>L</option>
-            <option>XL</option>
-            <option>XXL</option>
-          </select>
-        </div>
+      <p class="info">
+        💬 Setelah melakukan transfer, kirim bukti pembayaran ke salah satu nomor berikut:<br>
+        📱 Yafa: 0856-0703-4108<br>
+        📱 Livia: 0857-7617-6845
+      </p>
+      <div class="checkbox-group">
+        <label>
+          <input type="checkbox" id="noHeartDisease" required>
+          Saya tidak memiliki riwayat penyakit jantung
+        </label>
+        <label>
+          <input type="checkbox" id="fitToRun" required>
+          Saya sanggup untuk mengikuti Dalas Blast Run 3K
+        </label>
       </div>
-
-      <div style="margin-bottom:12px;">
-        <label>Jenis Kelamin *</label>
-        <div class="radio-row">
-          <label><input type="radio" name="jk" value="Laki-laki" required /> Laki-laki</label>
-          <label><input type="radio" name="jk" value="Perempuan" required /> Perempuan</label>
-        </div>
-      </div>
-
-      <div style="margin-bottom:12px;">
-        <label for="kontak">Nomor Kontak / WhatsApp *</label>
-        <input id="kontak" name="kontak" type="tel" required placeholder="08xxxxxxxxxx" />
-        <small>Gunakan nomor yang valid — berguna untuk konfirmasi.</small>
-      </div>
-
-      <button id="submitBtn" type="submit">Kirim Pendaftaran</button>
+      
+      <button type="submit">Daftar Sekarang</button>
     </form>
 
-    <div id="successMsg" class="msg success"></div>
-    <div id="errorMsg" class="msg error"></div>
+    <p style="text-align: center; margin-top: 15px;">
+      📱 <a href="https://chat.whatsapp.com/FmNtwkJqr2GBJVI3DdXqRP?mode=wwt" target="_blank" style="color: #007bff; text-decoration: none;">
+        Klik di sini untuk bergabung ke Grup WhatsApp Dalas Run
+      </a>
+    </p>
 
-    <hr style="margin-top:20px" />
-    <small>
-      Catatan: data akan disimpan di Firestore collection <code>pendaftaran</code>.
-      Jika ingin menutup pendaftaran nanti, bisa aku tambahkan tombol “Tutup Pendaftaran”.
-    </small>
+    <img src="Chart Baju.jpg" alt="Chart Ukuran Jersey DalasRun" class="jersey-image">
+
+    <!-- 🔹 Pesan sukses baru -->
+    <div id="result" class="result hidden" style="
+      background-color: #d4edda;
+      color: #155724;
+      border: 1px solid #c3e6cb;
+      font-weight: bold;
+      font-size: 18px;
+      text-align: center;
+      padding: 16px;
+      border-radius: 10px;
+      margin-top: 20px;
+    ">
+      ✅ Pendaftaran Berhasil!
+      <br>Nomor Peserta Kamu: <span id="participantNumber"></span>
+      <br><br>
+      Mohon <b>tidak mengisi formulir lagi</b> agar datamu tidak terduplikasi 🙏
+    </div>
   </div>
 
-  <!-- Firebase v8 CDN -->
-  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-app.js";
+    import { getFirestore, collection, addDoc, getDocs } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-firestore.js";
 
-  <script>
-    // 🔧 GANTI DENGAN KONFIGURASI FIREBASE MILIKMU
-const firebaseConfig = {
-    apiKey: "AIzaSyBugeV9lOylEyrwY9gVZvv8HP1NPBb4WiI",
-    authDomain: "dalas-run.firebaseapp.com",
-    projectId: "dalas-run",
-    storageBucket: "dalas-run.firebasestorage.app",
-    messagingSenderId: "903129658881",
-    appId: "1:903129658881:web:98593518aa602aaa7bf200",
-    measurementId: "G-BRWP0LZFYG"
-  };
-    firebase.initializeApp(firebaseConfig);
-    var db = firebase.firestore();
+    const firebaseConfig = {
+      apiKey: "AIzaSyBugeV9lOylEyrwY9gVZvv8HP1NPBb4WiI",
+      authDomain: "dalas-run.firebaseapp.com",
+      projectId: "dalas-run",
+      storageBucket: "dalas-run.firebasestorage.app",
+      messagingSenderId: "903129658881",
+      appId: "1:903129658881:web:98593518aa602aaa7bf200",
+      measurementId: "G-BRWP0LZFYG"
+    };
 
-    const form = document.getElementById('regForm');
-    const submitBtn = document.getElementById('submitBtn');
-    const successMsg = document.getElementById('successMsg');
-    const errorMsg = document.getElementById('errorMsg');
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
 
-    function showSuccess(text) {
-      successMsg.textContent = text;
-      successMsg.style.display = 'block';
-      errorMsg.style.display = 'none';
+    async function getNextNumber() {
+      const snap = await getDocs(collection(db, "pendaftar"));
+      const count = snap.size;
+      return (count + 1).toString().padStart(3, "0");
     }
 
-    function showError(text) {
-      errorMsg.textContent = text;
-      errorMsg.style.display = 'block';
-      successMsg.style.display = 'none';
-    }
+    document.getElementById("registrationForm").addEventListener("submit", async (event) => {
+      event.preventDefault();
 
-    form.addEventListener('submit', function (e) {
-      e.preventDefault();
-      submitBtn.disabled = true;
+      const name = document.getElementById("name").value;
+      const phone = document.getElementById("phone").value;
+      const category = document.querySelector('input[name="category"]:checked').value;
+      const gender = document.querySelector('input[name="gender"]:checked').value;
+      const jerseySize = document.getElementById("jerseySize").value;
+      const payment = document.querySelector('input[name="payment"]:checked').value;
 
-      const data = {
-        nama: document.getElementById('nama').value.trim(),
-        noPeserta: document.getElementById('noPeserta').value.trim(),
-        kategori: document.getElementById('kategori').value,
-        ukuran: document.getElementById('ukuran').value,
-        jenisKelamin: document.querySelector('input[name="jk"]:checked')?.value || '',
-        kontak: document.getElementById('kontak').value.trim(),
-        createdAt: new Date().toISOString()
-      };
+      const nomor = await getNextNumber();
 
-      if (!data.nama || !data.noPeserta || !data.kategori || !data.ukuran || !data.jenisKelamin || !data.kontak) {
-        showError('Harap isi semua field yang bertanda *.');
-        submitBtn.disabled = false;
-        return;
-      }
+      await addDoc(collection(db, "pendaftar"), {
+        nomorPeserta: nomor,
+        nama: name,
+        telepon: phone,
+        kategori: category,
+        jenisKelamin: gender,
+        ukuranJersey: jerseySize,
+        pembayaran: payment,
+        waktu: new Date().toISOString()
+      });
 
-      db.collection('pendaftaran').add(data)
-        .then((docRef) => {
-          showSuccess('Pendaftaran berhasil! (ID: ' + docRef.id + ')');
-          form.reset();
-          submitBtn.textContent = 'Terkirim';
-          submitBtn.disabled = true;
-        })
-        .catch((error) => {
-          console.error('Error: ', error);
-          showError('Terjadi kesalahan, coba lagi.');
-          submitBtn.disabled = false;
-        });
+      // 🔹 tampilkan hasil dan sembunyikan form
+      document.getElementById("participantNumber").textContent = nomor;
+      document.getElementById("result").classList.remove("hidden");
+      document.getElementById("registrationForm").style.display = "none";
     });
   </script>
 </body>
 </html>
+
