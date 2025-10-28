@@ -1,74 +1,57 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Pendaftaran Ditutup | Dalas Run</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Pendaftaran Dalas Run</title>
   <style>
     body {
-      font-family: 'Poppins', sans-serif;
-      background: linear-gradient(135deg, #ff4d4d, #ff9966);
+      font-family: Arial, Helvetica, sans-serif;
+      background: #f4f6fb;
       margin: 0;
-      height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      color: #fff;
-      text-align: center;
-      overflow: hidden;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 720px;
+      margin: 20px auto;
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 6px 18px rgba(20, 20, 40, 0.08);
+      padding: 24px;
     }
 
     h1 {
-      font-size: 2.5rem;
-      margin-bottom: 10px;
-      animation: fadeInDown 1s ease;
+      margin: 0 0 8px 0;
+      font-size: 22px;
     }
 
-    p {
-      font-size: 1.2rem;
-      opacity: 0.9;
-      animation: fadeIn 2s ease;
+    p.note {
+      color: #b33939;
+      margin: 6px 0 18px 0;
+      font-weight: 600;
     }
 
-    .card {
-      background: rgba(255, 255, 255, 0.15);
-      backdrop-filter: blur(10px);
-      border-radius: 20px;
-      padding: 40px 60px;
-      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
-      animation: popUp 0.8s ease;
+    form .row {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 12px;
     }
 
-    footer {
-      position: absolute;
-      bottom: 15px;
-      font-size: 0.9rem;
-      opacity: 0.8;
+    label {
+      display: block;
+      font-size: 13px;
+      margin-bottom: 6px;
+      color: #333;
     }
 
-    @keyframes fadeInDown {
-      from { opacity: 0; transform: translateY(-30px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
+    input[type="text"],
+    input[type="tel"],
+    select {
+      width: 100%;
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid #d6dbe6;
+      font-size
 
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
-
-    @keyframes popUp {
-      from { opacity: 0; transform: scale(0.9); }
-      to { opacity: 1; transform: scale(1); }
-    }
-  </style>
-</head>
-<body>
-  <div class="card">
-    <h1>Pendaftaran Dalas Run Telah Ditutup</h1>
-    <p>Terima kasih kepada seluruh peserta yang telah mendaftar!<br>
-    Nantikan informasi dan event menarik berikutnya 💪🏃‍♂️</p>
-  </div>
-  <footer>© 2025 Dalas Run Committee</footer>
-</body>
-</html>
+      
